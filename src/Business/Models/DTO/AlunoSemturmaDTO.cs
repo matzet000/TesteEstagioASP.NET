@@ -6,9 +6,19 @@ using System.Threading.Tasks;
 
 namespace Business.Models.DTO
 {
-    public class AlunoSemturmaDTO
+    /// <summary>
+    /// Aluno
+    /// </summary>
+    public class AlunoSemTurmaDTO
     {
+        /// <summary>
+        /// Matricula do Aluno
+        /// </summary>
         public string Matricula { get; set; }
+
+        /// <summary>
+        /// Nome do Aluno
+        /// </summary>
         public string Nome { get; set; }
 
         public void AlunoParaAlunoDTO(Aluno aluno)

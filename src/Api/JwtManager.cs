@@ -12,7 +12,7 @@ namespace Api
     {
         private const string Secret = "c4b9e7a2809c7ca5cbe7814bef4a0af4";
 
-        public static string GenerateToken(string email, int expireMinutes = 20)
+        public static string GenerateToken(string email, int expireMinutes = 10080)
         {
             var symmetricKey = Convert.FromBase64String(Secret);
             var tokenHandler = new JwtSecurityTokenHandler();

@@ -3,6 +3,7 @@ using Business.Models;
 using Data.Context;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +42,30 @@ namespace Data.Repository
             }
 
             return turmas;
+        }
+
+        public async Task RemoverAlunosDaTurma(string codigo)
+        {
+            var alunosTurma = await DbSet.Where(a => a.Codigo.Equals(codigo)).ToListAsync();
+
+            foreach (AlunoTurma alunoTurma in alunosTurma)
+            {
+                DbSet.Remove(alunoTurma);
+            }
+
+            await SaveChanges();
+        }
+
+        public async Task RemoverTurmasDoAluno(string matricula)
+        {
+            var turmasAluno = await DbSet.Where(a => a.Matricula.Equals(matricula)).ToListAsync();
+
+            foreach(AlunoTurma alunoTurma in turmasAluno)
+            {
+                DbSet.Remove(alunoTurma);
+            }
+
+            await SaveChanges();
         }
     }
 }

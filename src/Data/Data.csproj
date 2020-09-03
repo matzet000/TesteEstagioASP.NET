@@ -52,13 +52,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DataDbContext.cs" />
-    <Compile Include="Migrations\202009021809311_Initial.cs" />
-    <Compile Include="Migrations\202009021809311_Initial.designer.cs">
-      <DependentUpon>202009021809311_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009030001317_AddUsuario.cs" />
-    <Compile Include="Migrations\202009030001317_AddUsuario.designer.cs">
-      <DependentUpon>202009030001317_AddUsuario.cs</DependentUpon>
+    <Compile Include="Migrations\202009031717532_Inicial.cs" />
+    <Compile Include="Migrations\202009031717532_Inicial.designer.cs">
+      <DependentUpon>202009031717532_Inicial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,11 +75,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009021809311_Initial.resx">
-      <DependentUpon>202009021809311_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009030001317_AddUsuario.resx">
-      <DependentUpon>202009030001317_AddUsuario.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009031717532_Inicial.resx">
+      <DependentUpon>202009031717532_Inicial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

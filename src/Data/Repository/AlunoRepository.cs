@@ -2,6 +2,7 @@
 using Business.Models;
 using Data.Context;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Data.Repository
@@ -19,7 +20,8 @@ namespace Data.Repository
 
         public async Task Remover(string matricula)
         {
-            DbSet.Remove(new Aluno { Matricula = matricula });
+            var alunoDelete = DbSet.Where(a => a.Matricula.Equals(matricula)).FirstOrDefault();
+            DbSet.Remove(alunoDelete);
             await SaveChanges();
         }
     }

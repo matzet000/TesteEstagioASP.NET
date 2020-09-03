@@ -11,5 +11,8 @@ namespace Business.Intefaces
     {
         Task<IEnumerable<Aluno>> ObterAlunosDaTurma(string codigo);
         Task<IEnumerable<Turma>> ObterTurmaDoAluno(string matricula);
+
+        Task RemoverAlunosDaTurma(string codigo);
+        Task RemoverTurmasDoAluno(string matricula);
     }
 }

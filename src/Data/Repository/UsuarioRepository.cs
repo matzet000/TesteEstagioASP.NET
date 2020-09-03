@@ -17,7 +17,8 @@ namespace Data.Repository
 
         public async Task Remover(Guid id)
         {
-            DbSet.Remove(new Usuario { Id = id });
+            var usuarioDelete = DbSet.Where(u => u.Id == id).FirstOrDefault();
+            DbSet.Remove(usuarioDelete);
             await SaveChanges();
         }
     }

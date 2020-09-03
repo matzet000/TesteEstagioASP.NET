@@ -21,7 +21,8 @@ namespace Data.Repository
 
         public async Task Remover(string codigo)
         {
-            DbSet.Remove(new Turma { Codigo = codigo });
+            var turmaDelete = DbSet.Where(t => t.Codigo.Equals(codigo)).FirstOrDefault();
+            DbSet.Remove(turmaDelete);
             await SaveChanges();
         }
     }

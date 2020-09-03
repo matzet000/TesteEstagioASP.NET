@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace Business.Models.DTO
 {
+    /// <summary>
+    /// Turma
+    /// </summary>
     public class TurmaDTO
     {
+        /// <summary>
+        /// Codgio da Turma
+        /// </summary>
         public string Codigo { get; set; }
+
+        /// <summary>
+        /// Nome da Turma
+        /// </summary>
         public string Nome { get; set; }
 
-        public IList<AlunoSemturmaDTO> Alunos { get; set; }
+        /// <summary>
+        /// Alunos na turma
+        /// </summary>
+        public IList<AlunoSemTurmaDTO> Alunos { get; set; }
 
         public void TurmaParaTurmaDTO(Turma turma)
         {

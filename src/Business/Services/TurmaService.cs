@@ -37,6 +37,13 @@ namespace Business.Services
             {
                 throw new ArgumentException("A turma não está valida");
             }
+            
+            var turmaSitema = await _turmaRepository.ObterTurmaPorCodigo(turma.Codigo);
+
+            if (turma == null)
+            {
+                throw new ArgumentException("A turma não está cadastrada no sistema");
+            }
 
             await _turmaRepository.Atualizar(turma);
         }
@@ -66,12 +73,12 @@ namespace Business.Services
 
             foreach (TurmaDTO turma in turmasDTO)
             {
-                turma.Alunos = new List<AlunoSemturmaDTO>();
+                turma.Alunos = new List<AlunoSemTurmaDTO>();
                 var alunos = await _alunoTurmaRepository.ObterAlunosDaTurma(turma.Codigo);
 
                 foreach (Aluno aluno in alunos)
                 {
-                    AlunoSemturmaDTO alunoDTO = new AlunoSemturmaDTO();
+                    AlunoSemTurmaDTO alunoDTO = new AlunoSemTurmaDTO();
                     alunoDTO.AlunoParaAlunoDTO(aluno);
                     turma.Alunos.Add(alunoDTO);
                 }
@@ -86,13 +93,13 @@ namespace Business.Services
 
             TurmaDTO turmaDTO = new TurmaDTO();
             turmaDTO.TurmaParaTurmaDTO(turma);
-            turmaDTO.Alunos = new List<AlunoSemturmaDTO>();
+            turmaDTO.Alunos = new List<AlunoSemTurmaDTO>();
 
             var alunos = await _alunoTurmaRepository.ObterAlunosDaTurma(codigo);
 
             foreach(Aluno aluno in alunos)
             {
-                AlunoSemturmaDTO alunoDTO = new AlunoSemturmaDTO();
+                AlunoSemTurmaDTO alunoDTO = new AlunoSemTurmaDTO();
                 alunoDTO.AlunoParaAlunoDTO(aluno);
                 turmaDTO.Alunos.Add(alunoDTO);
             }

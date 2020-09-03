@@ -53,7 +53,7 @@
     <Compile Include="Intefaces\IUsuarioRepository.cs" />
     <Compile Include="Models\Aluno.cs" />
     <Compile Include="Models\AlunoTurma.cs" />
-    <Compile Include="Models\DTO\AlunoSemturmaDTO.cs" />
+    <Compile Include="Models\DTO\AlunoSemTurmaDTO.cs" />
     <Compile Include="Models\DTO\TurmaSemAlunosDTO.cs" />
     <Compile Include="Models\DTO\TurmaDTO.cs" />
     <Compile Include="Models\DTO\AlunoDTO.cs" />

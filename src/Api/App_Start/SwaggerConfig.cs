@@ -16,6 +16,7 @@ namespace Api
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
+                        c.IncludeXmlComments(string.Format(@"{0}\bin\Swagger.XML", System.AppDomain.CurrentDomain.BaseDirectory));
                         c.Schemes(new[] { "http", "https" });
                         c.SingleApiVersion("v1", "Documentação da API")
                         .Description("API de cadastro de Alunos e Turmas.")
@@ -29,7 +30,7 @@ namespace Api
                     })
                 .EnableSwaggerUi(c =>
                     {
-
+                        c.EnableApiKeySupport("Api-Key", "header");
                     });
         }
     }

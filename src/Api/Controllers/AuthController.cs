@@ -20,6 +20,16 @@ namespace Api.Controllers
             _usuarioRepository = usuarioRepository;
         }
 
+        /// <summary>
+        /// Cadastra novo usuario
+        /// </summary>
+        /// <remarks>
+        /// Cadastra novo usuario e retona no body o Token JWT
+        /// </remarks>
+        /// <param name="usuario">
+        /// E-mail e senha
+        /// </param>
+        /// <returns code="200"></returns>
         [HttpPost]
         [AllowAnonymous]
         [Route("api/usuario/create")]
@@ -29,6 +39,16 @@ namespace Api.Controllers
             return Ok(JwtManager.GenerateToken(usuario.Email));
         }
 
+        /// <summary>
+        /// Login usuario
+        /// </summary>
+        /// <remarks>
+        /// Gerar o no body o Token JWT
+        /// </remarks>
+        /// <param name="usuario">
+        /// E-mail e senha
+        /// </param>
+        /// <returns code="200"></returns>
         [HttpPost]
         [AllowAnonymous]
         [Route("api/usuario/login")]
@@ -40,12 +60,32 @@ namespace Api.Controllers
             return Ok(JwtManager.GenerateToken(usuario.Email));
         }
 
+        /// <summary>
+        /// Deleta o usuario
+        /// </summary>
+        /// <remarks>
+        /// Deleta o usuario do id apssado
+        /// </remarks>
+        /// <param name="id">
+        /// Id
+        /// </param>
+        /// <returns code="200"></returns>
         public async Task<IHttpActionResult> Delete(Guid id)
         {
             await _usuarioRepository.Remover(id);
             return Ok("Ok");
         }
 
+        /// <summary>
+        /// Atualiza o usuario
+        /// </summary>
+        /// <remarks>
+        /// Atualiza o usuario do id apssado
+        /// </remarks>
+        /// <param name="usuario">
+        /// Id, E-mail e senha
+        /// </param>
+        /// <returns code="200"></returns>
         public async Task<IHttpActionResult> Put([FromBody] Usuario usuario)
         {
             await _usuarioRepository.Atualizar(usuario);

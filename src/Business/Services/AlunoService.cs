@@ -29,14 +29,7 @@ namespace Business.Services
 
             if (!ExecutarValidacao(aluno))
             {
-                throw new ArgumentException("O Aluno não está valida");
-            }
-
-            var alunoExiste = await VerificarAlunoExite(aluno);
-            
-            if (alunoExiste)
-            {
-                throw new ArgumentException("O Aluno já existe no sistema");
+                throw new ArgumentException("O Aluno não está com nome valido");
             }
 
             string matricula = GerarMatricula();
@@ -70,7 +63,7 @@ namespace Business.Services
                 if (alunosNaTurma.Count() >= 5)
                 {
                     await _alunoRepository.Remover(matricula);
-                    throw new ArgumentException("O Turma está lotada.");
+                    throw new ArgumentException($"A Turma {turma.Codigo} está lotada.");
                 }
 
                 var alunoTurma = new AlunoTurma();
@@ -84,17 +77,65 @@ namespace Business.Services
         {
             if (!ExecutarValidacao(aluno))
             {
-                throw new ArgumentException("O Aluno não está valida");
+                throw new ArgumentException("O Aluno não está com nome valido");
             }
 
             var alunoExiste = await VerificarAlunoExite(aluno);
 
-            if (alunoExiste)
+            if (!alunoExiste)
             {
-                throw new ArgumentException("O Aluno já existe no sistema");
+                throw new ArgumentException("O Aluno não existe no sistema");
             }
 
-            await _alunoRepository.Atualizar(aluno);
+            if(turmas.Count == 0)
+            {
+                await _alunoTurmaRepository.RemoverTurmasDoAluno(aluno.Matricula);
+            }
+            else
+            {
+                foreach(Turma turmaItem in turmas)
+                {
+                    var turmaBuscada = await _turmaRepository.ObterTurmaPorCodigo(turmaItem.Codigo);
+
+                    if (turmaBuscada == null)
+                    {
+                        throw new ArgumentException("O Turma não está cadastrada no sistema");
+                    }
+                }
+
+                var turmasAntigas = await _alunoTurmaRepository.ObterTurmaDoAluno(aluno.Matricula);
+                await _alunoTurmaRepository.RemoverTurmasDoAluno(aluno.Matricula);
+
+                foreach (Turma turmaItem in turmas)
+                {
+
+                    var alunosNaTurma = await _alunoTurmaRepository.ObterAlunosDaTurma(turmaItem.Codigo);
+
+                    if (alunosNaTurma.Count() >= 5)
+                    {
+                        foreach(Turma turmaAntiga in turmasAntigas)
+                        {
+                            var alunoTurmaAntiga = new AlunoTurma();
+                            alunoTurmaAntiga.Matricula = aluno.Matricula;
+                            alunoTurmaAntiga.Codigo = turmaItem.Codigo;
+                            await _alunoTurmaRepository.Adicionar(alunoTurmaAntiga);
+                        }
+                        throw new ArgumentException($"A Turma {turmaItem.Codigo} está lotada.");
+                    }
+
+                    var alunoTurma = new AlunoTurma();
+                    alunoTurma.Matricula = aluno.Matricula;
+                    alunoTurma.Codigo = turmaItem.Codigo;
+                    await _alunoTurmaRepository.Adicionar(alunoTurma);
+                }
+            }
+
+            var alunoCadastrado = await _alunoRepository.ObterAlunoPorMatricula(aluno.Matricula);
+
+            if (!aluno.Nome.Equals(alunoCadastrado.Nome))
+            {
+                await _alunoRepository.Atualizar(aluno);
+            }
         }
 
         public async Task Remover(string matricula)
@@ -103,7 +144,7 @@ namespace Business.Services
 
             if(aluno == null)
             {
-                throw new ArgumentException("O Aluno não está cadastrada no sistema");
+                throw new ArgumentException("O Aluno não está cadastrado no sistema");
             }
 
             var turmas = await _alunoTurmaRepository.ObterTurmaDoAluno(matricula);
